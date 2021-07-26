@@ -36,6 +36,10 @@ public class Measure {
     @OneToMany(mappedBy = "measure")
     private List<MeasureDress> measureDressList;
 
+    public void changeMeasureDress() {
+    
+    }
+
     public Long getId() {
         return id;
     }
