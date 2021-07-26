@@ -36,8 +36,9 @@ public class Measure {
     @OneToMany(mappedBy = "measure")
     private List<MeasureDress> measureDressList;
 
-    public void changeMeasureDress() {
-    
+    public void addMeasureDress(MeasureDress measureDress) {
+        measureDressList.add(measureDress);
+        measureDress.setMeasure(this);
     }
 
     public Long getId() {

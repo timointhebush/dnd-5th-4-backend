@@ -35,4 +35,8 @@ public class MeasureDress {
     public Mood getPartialMood() {
         return partialMood;
     }
+
+    public void setMeasure(Measure measure) {
+        this.measure = measure;
+    }
 }
