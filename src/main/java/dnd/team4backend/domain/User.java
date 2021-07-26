@@ -47,4 +47,7 @@ public class User {
     public List<Dress> getDressList() {
         return dressList;
     }
+
+    public void changeMeasure(Measure measure) {
+    }
 }
