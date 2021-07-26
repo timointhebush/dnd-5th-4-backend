@@ -1,7 +1,6 @@
 package dnd.team4backend.domain;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Dress {
@@ -19,8 +18,6 @@ public class Dress {
     @Enumerated(EnumType.STRING)
     private DressType dressType; // TOP, BOTTOM, OUTER, SHOES, ETC
 
-    @OneToMany(mappedBy = "dress")
-    private List<MeasureDress> measureDressList;
 
     public Long getId() {
         return id;
@@ -38,7 +35,4 @@ public class Dress {
         return dressType;
     }
 
-    public List<MeasureDress> getMeasureDressList() {
-        return measureDressList;
-    }
 }
