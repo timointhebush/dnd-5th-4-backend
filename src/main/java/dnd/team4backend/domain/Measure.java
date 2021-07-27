@@ -41,6 +41,10 @@ public class Measure {
         measureDress.setMeasure(this);
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
