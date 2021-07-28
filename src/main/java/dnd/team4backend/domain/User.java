@@ -48,6 +48,8 @@ public class User {
         return dressList;
     }
 
-    public void changeMeasure(Measure measure) {
+    public void addMeasure(Measure measure) {
+        measureList.add(measure);
+        measure.setUser(this);
     }
 }
