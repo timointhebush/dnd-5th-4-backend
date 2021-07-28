@@ -18,6 +18,10 @@ public class User {
 
     private Integer age;
 
+    @Enumerated(EnumType.STRING)
+    private Constitution constitution; // HOT(더위 많이 탐), COLD(추위 많이 탐)
+
+
     @OneToMany(mappedBy = "user")
     private final List<Measure> measureList = new ArrayList<>();
 
@@ -51,5 +55,10 @@ public class User {
     public void addMeasure(Measure measure) {
         measureList.add(measure);
         measure.setUser(this);
+    }
+
+    public void addDress(Dress dress) {
+        dressList.add(dress);
+        dress.setUser(this);
     }
 }
