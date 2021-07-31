@@ -61,4 +61,12 @@ public class User {
         dressList.add(dress);
         dress.setUser(this);
     }
+
+    public void addBasicInfo(String id, String name, Gender gender, Integer age, Constitution constitution) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        this.constitution = constitution;
+    }
 }
