@@ -68,4 +68,18 @@ class UserServiceTest {
         //then
         Assertions.assertEquals(true, result);
     }
+
+    @Test
+    public void 회원_Id_검색테스트() throws Exception {
+        // given
+        User user1 = new User();
+        user1.addBasicInfo("testId1", "Kim", Gender.M, 18, Constitution.HOT);
+
+        // when
+        String savedId = userService.join(user1);
+
+        // then
+        Assertions.assertEquals(user1, userService.findOne(savedId));
+    }
+
 }
