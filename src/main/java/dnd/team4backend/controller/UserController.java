@@ -27,7 +27,7 @@ public class UserController {
 
             JsonObject obj = new JsonObject();
 
-            obj.addProperty("success", true);
+            obj.addProperty("status", 200);
             obj.addProperty("msg", "회원 등록 완료");
 
             JsonObject data = new JsonObject();
@@ -43,7 +43,7 @@ public class UserController {
         } catch (IllegalStateException e) {
             JsonObject obj = new JsonObject();
 
-            obj.addProperty("success", false);
+            obj.addProperty("status", 400);
             obj.addProperty("msg", e.getMessage());
 
             return obj.toString();
