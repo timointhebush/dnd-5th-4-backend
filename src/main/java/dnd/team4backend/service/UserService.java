@@ -42,4 +42,8 @@ public class UserService {
         }
     }
 
+    public User findOne(String userId) {
+        return userRepository.findOne(userId);
+    }
+
 }
