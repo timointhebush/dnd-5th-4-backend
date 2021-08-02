@@ -38,4 +38,13 @@ public class Dress {
     public void setUser(User user) {
         this.user = user;
     }
+
+    //==생성 메서드==//
+    public static Dress createDress(User user, String dressName, DressType dressType) {
+        Dress dress = new Dress();
+        dress.dressName = dressName;
+        dress.dressType = dressType;
+        user.addDress(dress);
+        return dress;
+    }
 }
