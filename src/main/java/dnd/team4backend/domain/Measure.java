@@ -12,7 +12,7 @@ public class Measure {
     @Column(name = "measure_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -44,6 +44,27 @@ public class Measure {
     public void setUser(User user) {
         this.user = user;
     }
+
+    //==생성 메서드==//
+    public static Measure createMeasure(User user, LocalDateTime date, String tempInfo, Float temperatureHigh,
+                                        Float temperatureLow, Float humidity, String area, Mood mood,
+                                        String comment, MeasureDress... measureDresses) {
+        Measure measure = new Measure();
+        measure.setUser(user);
+        measure.date = date;
+        measure.tempInfo = tempInfo;
+        measure.temperatureHigh = temperatureHigh;
+        measure.temperatureLow = temperatureLow;
+        measure.humidity = humidity;
+        measure.area = area;
+        measure.mood = mood;
+        measure.comment = comment;
+        for (MeasureDress measureDress : measureDresses) {
+            measure.addMeasureDress(measureDress);
+        }
+        return measure;
+    }
+
 
     public Long getId() {
         return id;
