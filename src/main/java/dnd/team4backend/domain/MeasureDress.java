@@ -9,11 +9,11 @@ public class MeasureDress {
     @Column(name = "measure_dress_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "measure_id")
     private Measure measure;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dress_id")
     private Dress dress;
 
