@@ -50,4 +50,22 @@ class UserServiceTest {
         //then
         Assertions.fail("예외 발생해야함");
     }
+
+    @Test
+    public void 회원_닉네임_중복테스트() throws Exception {
+        //given
+        User user1 = new User();
+        user1.addBasicInfo("testId1", "Kim", Gender.M, 18, Constitution.HOT);
+
+        User user2 = new User();
+        user2.addBasicInfo("testId2", "Kim", Gender.W, 20, Constitution.COLD);
+
+        userService.join(user1);
+        //when
+
+        boolean result = userService.isExistedNickName(user2.getName());
+
+        //then
+        Assertions.assertEquals(true, result);
+    }
 }

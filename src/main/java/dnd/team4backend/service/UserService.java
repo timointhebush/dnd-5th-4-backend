@@ -5,6 +5,8 @@ import dnd.team4backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -21,7 +23,7 @@ public class UserService {
         userRepository.save(user);
         return user.getId();
     }
-    
+
     private void validateDuplicateUser(User user) {
         User findUser = userRepository.findOne(user.getId());
         if (findUser != null) {
@@ -29,5 +31,13 @@ public class UserService {
         }
     }
 
+    public boolean isExistedNickName(String name) {
+        List<User> findUsers = userRepository.findByName(name);
+        if (findUsers.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 }
