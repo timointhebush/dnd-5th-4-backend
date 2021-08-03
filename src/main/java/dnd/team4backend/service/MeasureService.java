@@ -2,6 +2,7 @@ package dnd.team4backend.service;
 
 import dnd.team4backend.domain.*;
 import dnd.team4backend.repository.DressRepository;
+import dnd.team4backend.repository.MeasureDressRepository;
 import dnd.team4backend.repository.MeasureRepository;
 import dnd.team4backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,13 @@ public class MeasureService {
     private final MeasureRepository measureRepository;
     private final DressRepository dressRepository;
     private final UserRepository userRepository;
+    private final MeasureDressRepository measureDressRepository;
 
-    public MeasureService(MeasureRepository measureRepository, DressRepository dressRepository, UserRepository userRepository) {
+    public MeasureService(MeasureRepository measureRepository, DressRepository dressRepository, UserRepository userRepository, MeasureDressRepository measureDressRepository) {
         this.measureRepository = measureRepository;
         this.dressRepository = dressRepository;
         this.userRepository = userRepository;
+        this.measureDressRepository = measureDressRepository;
     }
 
     /**
@@ -61,4 +64,10 @@ public class MeasureService {
         return measure.getId();
     }
 
+    @Transactional
+    public void updateMeasure(Long measureId, MeasureVO measureVO) {
+        Measure measure = measureRepository.findOne(measureId);
+        measure.modifyMeasure(measureVO);
+    }
+    
 }

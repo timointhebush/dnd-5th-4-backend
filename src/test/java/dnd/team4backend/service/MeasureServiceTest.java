@@ -46,9 +46,9 @@ class MeasureServiceTest {
         dressVOList.add(d3);
         dressVOList.add(d4);
 
-        MeasureVO measureVO = new MeasureVO(LocalDateTime.now(), "구름 많음", 31.5F,
+        MeasureVO measureVO = new MeasureVO();
+        measureVO.createMeasureVO(LocalDateTime.now(), "구름 많음", 31.5F,
                 24.3F, 15F, "서울", Mood.GOOD, "날씨에 맞게 옷을 잘 입은듯하다.");
-
         //when
 
         Long measureId = measureService.measure(user.getId(), dressVOList, measureVO);
@@ -86,12 +86,54 @@ class MeasureServiceTest {
         dressVOList.add(d4);
 
 
-        MeasureVO measureVO = new MeasureVO(LocalDateTime.now(), "구름 많음", 31.5F,
+        MeasureVO measureVO = new MeasureVO();
+        measureVO.createMeasureVO(LocalDateTime.now(), "구름 많음", 31.5F,
                 24.3F, 15F, "서울", Mood.GOOD, "날씨에 맞게 옷을 잘 입은듯하다.");
-
         //when
 
         Long measureId = measureService.measure(user.getId(), dressVOList, measureVO);
+
+        //then
+
+        Measure getMeasure = measureRepository.findOne(measureId);
+
+        Assertions.assertEquals(user, getMeasure.getUser());
+    }
+
+    @Test
+    @Rollback(value = false)
+    public void 메져드레스_수정() throws Exception {
+        //given
+        User user = new User();
+        user.addBasicInfo("fasffasd", "hh", Gender.M, 25, Constitution.HOT);
+
+        em.persist(user);
+
+        DressVO d1 = new DressVO(1L, user.getId(), "회색 가디건", DressType.OUTER, Mood.GOOD);
+        DressVO d2 = new DressVO(2L, user.getId(), "검은색 무지티", DressType.TOP, Mood.VERYHOT);
+        DressVO d3 = new DressVO(3L, user.getId(), "연청바지", DressType.BOTTOM, Mood.COLD);
+        DressVO d4 = new DressVO(4L, user.getId(), "나이키 조던", DressType.SHOES, Mood.GOOD);
+
+        List<DressVO> dressVOList = new ArrayList<>();
+        dressVOList.add(d1);
+        dressVOList.add(d2);
+        dressVOList.add(d3);
+        dressVOList.add(d4);
+
+        MeasureVO measureVO = new MeasureVO();
+        measureVO.createMeasureVO(LocalDateTime.now(), "구름 많음", 31.5F,
+                24.3F, 15F, "서울", Mood.GOOD, "날씨에 맞게 옷을 잘 입은듯하다.");
+
+
+        Long measureId = measureService.measure(user.getId(), dressVOList, measureVO);
+
+        //when
+
+        MeasureVO measureVO2 = new MeasureVO();
+        measureVO2.setComment("코멘트를 수정하였습니다.");
+        measureVO2.setTempInfo("화창");
+
+        measureService.updateMeasure(measureId, measureVO2);
 
         //then
 

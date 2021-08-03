@@ -69,6 +69,33 @@ public class Measure {
         return measure;
     }
 
+    public void modifyMeasure(MeasureVO measureVO) {
+        if (measureVO.getDate() != null) {
+            date = measureVO.getDate();
+        }
+        if (measureVO.getArea() != null) {
+            area = measureVO.getArea();
+        }
+        if (measureVO.getComment() != null) {
+            comment = measureVO.getComment();
+        }
+        if (measureVO.getHumidity() != null) {
+            humidity = measureVO.getHumidity();
+        }
+        if (measureVO.getTemperatureLow() != null) {
+            temperatureLow = measureVO.getTemperatureLow();
+        }
+        if (measureVO.getTemperatureHigh() != null) {
+            temperatureHigh = measureVO.getTemperatureHigh();
+        }
+        if (measureVO.getTempInfo() != null) {
+            tempInfo = measureVO.getTempInfo();
+        }
+        if (measureVO.getMood() != null) {
+            mood = measureVO.getMood();
+        }
+    }
+
 
     public Long getId() {
         return id;
