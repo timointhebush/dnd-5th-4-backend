@@ -11,7 +11,11 @@ import java.util.List;
 public class UserRepository {
 
     @PersistenceContext
-    private EntityManager em;
+    private final EntityManager em;
+
+    public UserRepository(EntityManager em) {
+        this.em = em;
+    }
 
     public void save(User user) {
         em.persist(user);

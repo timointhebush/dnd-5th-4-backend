@@ -2,6 +2,7 @@ package dnd.team4backend.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,22 +34,25 @@ public class Measure {
 
     private String comment;
 
-    @OneToMany(mappedBy = "measure")
-    private List<MeasureDress> measureDressList;
+    @OneToMany(mappedBy = "measure", cascade = CascadeType.ALL)
+    private final List<MeasureDress> measureDressList = new ArrayList<>();
 
     public void addMeasureDress(MeasureDress measureDress) {
-        measureDressList.add(measureDress);
         measureDress.setMeasure(this);
+        measureDressList.add(measureDress);
     }
 
     public void setUser(User user) {
         this.user = user;
     }
 
+    protected Measure() {
+    }
+
     //==생성 메서드==//
     public static Measure createMeasure(User user, LocalDateTime date, String tempInfo, Float temperatureHigh,
                                         Float temperatureLow, Float humidity, String area, Mood mood,
-                                        String comment, MeasureDress... measureDresses) {
+                                        String comment, List<MeasureDress> measureDresses) {
         Measure measure = new Measure();
         measure.setUser(user);
         measure.date = date;

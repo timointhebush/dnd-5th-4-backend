@@ -4,9 +4,11 @@ import dnd.team4backend.domain.Dress;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Repository
 public class DressRepository {
+    @PersistenceContext
     private final EntityManager em;
 
     public DressRepository(EntityManager em) {
