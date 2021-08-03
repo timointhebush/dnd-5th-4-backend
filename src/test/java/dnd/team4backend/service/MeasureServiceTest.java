@@ -1,0 +1,102 @@
+package dnd.team4backend.service;
+
+import dnd.team4backend.domain.*;
+import dnd.team4backend.repository.MeasureRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@SpringBootTest
+@Transactional
+class MeasureServiceTest {
+
+    @Autowired
+    EntityManager em;
+    @Autowired
+    MeasureService measureService;
+    @Autowired
+    MeasureRepository measureRepository;
+
+
+    @Test
+    @Rollback(value = false)
+    public void 날씨평가() throws Exception {
+        //given
+        User user = new User();
+        user.addBasicInfo("fasffasd", "hh", Gender.M, 25, Constitution.HOT);
+
+        em.persist(user);
+
+        DressVO d1 = new DressVO(1L, user.getId(), "회색 가디건", DressType.OUTER, Mood.GOOD);
+        DressVO d2 = new DressVO(2L, user.getId(), "검은색 무지티", DressType.TOP, Mood.VERYHOT);
+        DressVO d3 = new DressVO(3L, user.getId(), "연청바지", DressType.BOTTOM, Mood.COLD);
+        DressVO d4 = new DressVO(4L, user.getId(), "나이키 조던", DressType.SHOES, Mood.GOOD);
+
+        List<DressVO> dressVOList = new ArrayList<>();
+        dressVOList.add(d1);
+        dressVOList.add(d2);
+        dressVOList.add(d3);
+        dressVOList.add(d4);
+
+        MeasureVO measureVO = new MeasureVO(LocalDateTime.now(), "구름 많음", 31.5F,
+                24.3F, 15F, "서울", Mood.GOOD, "날씨에 맞게 옷을 잘 입은듯하다.");
+
+        //when
+
+        Long measureId = measureService.measure(user.getId(), dressVOList, measureVO);
+
+        //then
+
+        Measure getMeasure = measureRepository.findOne(measureId);
+
+        Assertions.assertEquals(user, getMeasure.getUser());
+    }
+
+    @Test
+    @Rollback(value = false)
+    public void 날씨평가_옷이DB에있을경우() throws Exception {
+        //given
+        User user = new User();
+        user.addBasicInfo("fasffasd", "hh", Gender.M, 25, Constitution.HOT);
+
+        em.persist(user);
+        Dress dress1 = Dress.createDress(user, "회색 가디건", DressType.OUTER);
+        Dress dress2 = Dress.createDress(user, "검은색 무지티", DressType.TOP);
+
+        em.persist(dress1);
+        em.persist(dress2);
+
+        DressVO d1 = new DressVO(dress1.getId(), user.getId(), "회색 가디건", DressType.OUTER, Mood.GOOD);
+        DressVO d2 = new DressVO(dress2.getId(), user.getId(), "검은색 무지티", DressType.TOP, Mood.VERYHOT);
+        DressVO d3 = new DressVO(3L, user.getId(), "연청바지", DressType.BOTTOM, Mood.COLD);
+        DressVO d4 = new DressVO(4L, user.getId(), "나이키 조던", DressType.SHOES, Mood.GOOD);
+
+        List<DressVO> dressVOList = new ArrayList<>();
+        dressVOList.add(d1);
+        dressVOList.add(d2);
+        dressVOList.add(d3);
+        dressVOList.add(d4);
+
+
+        MeasureVO measureVO = new MeasureVO(LocalDateTime.now(), "구름 많음", 31.5F,
+                24.3F, 15F, "서울", Mood.GOOD, "날씨에 맞게 옷을 잘 입은듯하다.");
+
+        //when
+
+        Long measureId = measureService.measure(user.getId(), dressVOList, measureVO);
+
+        //then
+
+        Measure getMeasure = measureRepository.findOne(measureId);
+
+        Assertions.assertEquals(user, getMeasure.getUser());
+    }
+}
