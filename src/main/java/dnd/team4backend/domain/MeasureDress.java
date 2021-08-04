@@ -18,7 +18,7 @@ public class MeasureDress {
     private Dress dress;
 
     @Enumerated(EnumType.STRING)
-    private final Mood partialMood;
+    private Mood partialMood;
 
     public Long getId() {
         return id;
@@ -44,8 +44,15 @@ public class MeasureDress {
         this.dress = dress;
     }
 
-    public MeasureDress(Dress dress, Mood partialMood) {
-        this.dress = dress;
+    public void setPartialMood(Mood partialMood) {
         this.partialMood = partialMood;
+    }
+
+    public static MeasureDress createMeasureDress(Dress dress, Mood partialMood) {
+        MeasureDress measureDress = new MeasureDress();
+        measureDress.setDress(dress);
+        measureDress.setPartialMood(partialMood);
+
+        return measureDress;
     }
 }

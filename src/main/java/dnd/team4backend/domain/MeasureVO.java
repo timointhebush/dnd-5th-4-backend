@@ -4,23 +4,23 @@ import java.time.LocalDateTime;
 
 public class MeasureVO {
 
-    private final LocalDateTime date;
+    private LocalDateTime date;
 
-    private final String tempInfo;
+    private String tempInfo;
 
-    private final Float temperatureHigh;
+    private Float temperatureHigh;
 
-    private final Float temperatureLow;
+    private Float temperatureLow;
 
-    private final Float humidity;
+    private Float humidity;
 
-    private final String area;
+    private String area;
 
-    private final Mood mood; // VERYHOT, HOT, GOOD, COLD, VERYCOLD
+    private Mood mood; // VERYHOT, HOT, GOOD, COLD, VERYCOLD
 
-    private final String comment;
+    private String comment;
 
-    public MeasureVO(LocalDateTime date, String tempInfo, Float temperatureHigh, Float temperatureLow, Float humidity, String area, Mood mood, String comment) {
+    public void createMeasureVO(LocalDateTime date, String tempInfo, Float temperatureHigh, Float temperatureLow, Float humidity, String area, Mood mood, String comment) {
         this.date = date;
         this.tempInfo = tempInfo;
         this.temperatureHigh = temperatureHigh;
@@ -61,5 +61,37 @@ public class MeasureVO {
 
     public String getComment() {
         return comment;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public void setTempInfo(String tempInfo) {
+        this.tempInfo = tempInfo;
+    }
+
+    public void setTemperatureHigh(Float temperatureHigh) {
+        this.temperatureHigh = temperatureHigh;
+    }
+
+    public void setTemperatureLow(Float temperatureLow) {
+        this.temperatureLow = temperatureLow;
+    }
+
+    public void setHumidity(Float humidity) {
+        this.humidity = humidity;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

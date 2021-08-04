@@ -17,11 +17,9 @@ public class MeasureRepository {
     }
 
     public void save(Measure measure) {
-        if (measure.getId() == null) {
-            em.persist(measure);
-        } else {
-            em.merge(measure);
-        }
+        // merge는 전부다 갈아 엎는다
+        // 따라서 일부만 변경하고 싶을때는 변경감지를 이용한다.
+        em.persist(measure);
     }
 
     public Measure findOne(Long id) {
