@@ -39,6 +39,14 @@ public class Dress {
         this.user = user;
     }
 
+    public void setDressName(String dressName) {
+        this.dressName = dressName;
+    }
+
+    public void setDressType(DressType dressType) {
+        this.dressType = dressType;
+    }
+
     //==생성 메서드==//
     public static Dress createDress(User user, String dressName, DressType dressType) {
         Dress dress = new Dress();

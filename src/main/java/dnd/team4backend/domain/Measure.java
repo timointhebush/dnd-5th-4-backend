@@ -96,7 +96,6 @@ public class Measure {
         }
     }
 
-
     public Long getId() {
         return id;
     }
