@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class MeasureForm {
+
+    private String userId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime date;
     private Float temperatureHigh;
@@ -17,6 +19,14 @@ public class MeasureForm {
     private List<MeasureDressForm> dresses;
     private Mood mood;
     private String comment;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public LocalDateTime getDate() {
         return date;

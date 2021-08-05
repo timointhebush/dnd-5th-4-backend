@@ -31,7 +31,7 @@ class MeasureServiceTest {
     public void 날씨평가() throws Exception {
         //given
         User user = new User();
-        user.addBasicInfo("fasffasd", "hh", Gender.M, 25, Constitution.HOT);
+        user.addBasicInfo("fasffasd", "hh", Gender.M, Constitution.HOT);
 
         em.persist(user);
 
@@ -65,7 +65,7 @@ class MeasureServiceTest {
     public void 날씨평가_옷이DB에있을경우() throws Exception {
         //given
         User user = new User();
-        user.addBasicInfo("fasffasd", "hh", Gender.M, 25, Constitution.HOT);
+        user.addBasicInfo("fasffasd", "hh", Gender.M, Constitution.HOT);
 
         em.persist(user);
         Dress dress1 = Dress.createDress(user, "회색 가디건", DressType.OUTER);
@@ -105,7 +105,7 @@ class MeasureServiceTest {
     public void 메져_수정() throws Exception {
         //given
         User user = new User();
-        user.addBasicInfo("fasffasd", "hh", Gender.M, 25, Constitution.HOT);
+        user.addBasicInfo("fasffasd", "hh", Gender.M, Constitution.HOT);
 
         em.persist(user);
 
@@ -147,7 +147,7 @@ class MeasureServiceTest {
     public void 메져드레스_수정() throws Exception {
         //given
         User user = new User();
-        user.addBasicInfo("fasffasd", "hh", Gender.M, 25, Constitution.HOT);
+        user.addBasicInfo("fasffasd", "hh", Gender.M, Constitution.HOT);
 
         em.persist(user);
 

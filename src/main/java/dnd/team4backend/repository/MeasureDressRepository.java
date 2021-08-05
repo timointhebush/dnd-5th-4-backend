@@ -20,4 +20,9 @@ public class MeasureDressRepository {
         return em.find(MeasureDress.class, id);
     }
 
+    public void deleteOne(Long id) {
+        MeasureDress measureDress = em.find(MeasureDress.class, id);
+        em.remove(measureDress);
+    }
+
 }

@@ -20,11 +20,9 @@ public class UserController {
 
     @PostMapping(value = "user")
     public String signUp(@RequestBody UserForm userForm) {
-        // header 에서 userId 받아오는 코드 구현해야함. //
-
 
         User user = new User();
-        user.addBasicInfo("testuser1", userForm.getName(), userForm.getGender(), userForm.getAge(), userForm.getConstitution());
+        user.addBasicInfo(userForm.getUserId(), userForm.getName(), userForm.getGender(), userForm.getConstitution());
         try {
             userService.join(user);
 
@@ -37,7 +35,6 @@ public class UserController {
 
             data.addProperty("name", userForm.getName());
             data.addProperty("gender", userForm.getGender().toString());
-            data.addProperty("age", userForm.getAge());
             data.addProperty("constitution", userForm.getConstitution().toString());
             obj.add("data", data);
 

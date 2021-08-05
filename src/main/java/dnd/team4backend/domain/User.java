@@ -16,7 +16,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender; // M,W
 
-    private Integer age;
 
     @Enumerated(EnumType.STRING)
     private Constitution constitution; // HOT(더위 많이 탐), COLD(추위 많이 탐)
@@ -40,9 +39,6 @@ public class User {
         return gender;
     }
 
-    public Integer getAge() {
-        return age;
-    }
 
     public List<Measure> getMeasureList() {
         return measureList;
@@ -62,11 +58,10 @@ public class User {
         dress.setUser(this);
     }
 
-    public void addBasicInfo(String id, String name, Gender gender, Integer age, Constitution constitution) {
+    public void addBasicInfo(String id, String name, Gender gender, Constitution constitution) {
         this.id = id;
         this.name = name;
         this.gender = gender;
-        this.age = age;
         this.constitution = constitution;
     }
 }

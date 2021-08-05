@@ -5,10 +5,18 @@ import dnd.team4backend.domain.Constitution;
 import dnd.team4backend.domain.Gender;
 
 public class UserForm {
+    private String userId;
     private String name;
     private Gender gender;
-    private Integer age;
     private Constitution constitution;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getName() {
         return name;
@@ -26,13 +34,6 @@ public class UserForm {
         this.gender = gender;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
 
     public Constitution getConstitution() {
         return constitution;
