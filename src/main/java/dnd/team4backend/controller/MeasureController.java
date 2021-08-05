@@ -8,9 +8,7 @@ import dnd.team4backend.domain.Mood;
 import dnd.team4backend.domain.User;
 import dnd.team4backend.repository.UserRepository;
 import dnd.team4backend.service.MeasureService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,8 +28,7 @@ public class MeasureController {
     @PostMapping(value = "measure")
     public String addMeasure(@RequestBody MeasureForm measureForm) {
 
-        // userid 헤더로 받는 코드 구현해야함 //
-        String userId = "testuser1";
+        String userId = measureForm.getUserId();
         if (userRepository.findOne(userId) == null) {
             JsonObject obj = new JsonObject();
             obj.addProperty("status", 400);
@@ -77,6 +74,37 @@ public class MeasureController {
             return obj.toString();
         }
 
+    }
 
+    @PatchMapping(value = "measure/{id}")
+    public String updateMeasure(@RequestBody MeasureForm measureForm, @PathVariable("id") Long id) {
+        String userId = measureForm.getUserId();
+        if (userRepository.findOne(userId) == null) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("status", 400);
+            obj.addProperty("msg", "해당하는 id의 회원이 존재하지 않습니다.");
+
+            return obj.toString();
+        }
+        User user = userRepository.findOne(userId);
+
+        LocalDateTime date = measureForm.getDate();
+        Float temperatureHigh = measureForm.getTemperatureHigh();
+        Float temperatureLow = measureForm.getTemperatureLow();
+        Float humidity = measureForm.getHumidity();
+        String area = measureForm.getArea();
+        String tempInfo = measureForm.getTempInfo();
+        List<MeasureDressForm> dresses = measureForm.getDresses();
+        Mood mood = measureForm.getMood();
+        String comment = measureForm.getComment();
+
+        if (measureForm.getDresses() == null) {
+            MeasureVO measureVO = new MeasureVO();
+            measureVO.createMeasureVO(date, tempInfo, temperatureHigh, temperatureLow, humidity, area, mood, comment);
+            measureService.updateMeasure(id, measureVO);
+            return "평가 수정 완료";
+        } else {
+            return "dress exist";
+        }
     }
 }

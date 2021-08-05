@@ -24,7 +24,7 @@ class UserServiceTest {
     void 회원등록테스트() throws Exception {
         //given
         User user = new User();
-        user.addBasicInfo("testId1", "Kim", Gender.M, 18, Constitution.HOT);
+        user.addBasicInfo("testId1", "Kim", Gender.M, Constitution.HOT);
 
         //when
         String savedId = userService.join(user);
@@ -36,10 +36,10 @@ class UserServiceTest {
     public void 회원_아이디_중복테스트() throws Exception {
         //given
         User user1 = new User();
-        user1.addBasicInfo("testId1", "Kim", Gender.M, 18, Constitution.HOT);
+        user1.addBasicInfo("testId1", "Kim", Gender.M, Constitution.HOT);
 
         User user2 = new User();
-        user2.addBasicInfo("testId1", "Lee", Gender.W, 20, Constitution.COLD);
+        user2.addBasicInfo("testId1", "Lee", Gender.W, Constitution.COLD);
         //when
         userService.join(user1);
         try {
@@ -55,10 +55,10 @@ class UserServiceTest {
     public void 회원_닉네임_중복테스트() throws Exception {
         //given
         User user1 = new User();
-        user1.addBasicInfo("testId1", "Kim", Gender.M, 18, Constitution.HOT);
+        user1.addBasicInfo("testId1", "Kim", Gender.M, Constitution.HOT);
 
         User user2 = new User();
-        user2.addBasicInfo("testId2", "Kim", Gender.W, 20, Constitution.COLD);
+        user2.addBasicInfo("testId2", "Kim", Gender.W, Constitution.COLD);
 
         userService.join(user1);
         //when
@@ -73,7 +73,7 @@ class UserServiceTest {
     public void 회원_Id_검색테스트() throws Exception {
         // given
         User user1 = new User();
-        user1.addBasicInfo("testId1", "Kim", Gender.M, 18, Constitution.HOT);
+        user1.addBasicInfo("testId1", "Kim", Gender.M, Constitution.HOT);
 
         // when
         String savedId = userService.join(user1);
