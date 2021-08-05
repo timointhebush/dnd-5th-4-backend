@@ -96,5 +96,9 @@ public class MeasureService {
     public void deleteMeasure(Long id) {
         measureRepository.delete(id);
     }
+    
+    public List<Measure> findByWeather(User user, Float temperatureHigh, Float temperatureLow, Float humidity) {
+        return measureRepository.findByWeather(user, temperatureHigh, temperatureLow, humidity);
+    }
 
 }
