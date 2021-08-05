@@ -23,6 +23,53 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping(value = "user")
+    public String isOurMember(@RequestBody UserForm userForm) {
+        User user = userService.findOne(userForm.getUserId());
+        if (user == null) {
+            JsonObject obj = new JsonObject();
+
+            obj.addProperty("status", 200);
+            obj.addProperty("isOurMember", false);
+            obj.addProperty("msg", "해당 id의 회원이 존재하지 않습니다.");
+
+            return obj.toString();
+
+        } else {
+            JsonObject obj = new JsonObject();
+
+            obj.addProperty("status", 200);
+            obj.addProperty("isOurMember", true);
+            obj.addProperty("msg", "이미 가입된 회원입니다.");
+
+            return obj.toString();
+        }
+    }
+
+    @GetMapping(value = "name")
+    public String isExistedNickName(@RequestBody UserForm userForm) {
+        boolean isExistNickName = userService.isExistedNickName(userForm.getName());
+        if (!isExistNickName) {
+            JsonObject obj = new JsonObject();
+
+            obj.addProperty("status", 200);
+            obj.addProperty("isExistNickName", false);
+            obj.addProperty("msg", "해당 닉네임은 사용이 가능합니다.");
+
+            return obj.toString();
+
+        } else {
+            JsonObject obj = new JsonObject();
+
+            obj.addProperty("status", 200);
+            obj.addProperty("isExistNickName", true);
+            obj.addProperty("msg", "이미 사용하고 있는 닉네임입니다.");
+
+            return obj.toString();
+        }
+    }
+
+
     @PostMapping(value = "user")
     public String signUp(@RequestBody UserForm userForm) {
 
