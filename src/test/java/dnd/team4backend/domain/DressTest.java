@@ -13,7 +13,7 @@ public class DressTest {
     public void Dress_Entity_생성테스트() throws Exception {
         //given
         User user = new User();
-        user.addBasicInfo("abcd", "junseok", Gender.M, 25, Constitution.HOT);
+        user.addBasicInfo("abcd", "junseok", Gender.M, Constitution.HOT);
 
         //when
         Dress dress = Dress.createDress(user, "나이키 반바지", DressType.BOTTOM);

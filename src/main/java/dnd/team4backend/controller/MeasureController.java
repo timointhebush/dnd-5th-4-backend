@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MeasureController {
@@ -142,6 +143,34 @@ public class MeasureController {
 
                 return obj.toString();
             }
+        }
+    }
+
+    @DeleteMapping(value = "measure/{id}")
+    public String deleteMeasure(@RequestBody Map<String, Object> req, @PathVariable("id") Long id) {
+        String userId = req.get("userId").toString();
+        if (userRepository.findOne(userId) == null) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("status", 400);
+            obj.addProperty("msg", "해당하는 id의 회원이 존재하지 않습니다.");
+
+            return obj.toString();
+        }
+
+        try {
+            measureService.deleteMeasure(id);
+            JsonObject obj = new JsonObject();
+            obj.addProperty("status", 200);
+            obj.addProperty("msg", "평가 삭제 완료");
+            return obj.toString();
+
+        } catch (IllegalStateException e) {
+            JsonObject obj = new JsonObject();
+
+            obj.addProperty("status", 400);
+            obj.addProperty("msg", e.getMessage());
+
+            return obj.toString();
         }
     }
 }
