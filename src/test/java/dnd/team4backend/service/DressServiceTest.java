@@ -22,7 +22,7 @@ public class DressServiceTest {
     public void 옷_저장_테스트() {
         // given
         User user = new User();
-        user.addBasicInfo("abcd", "junseok", Gender.M, 25, Constitution.HOT);
+        user.addBasicInfo("abcd", "junseok", Gender.M, Constitution.HOT);
         Dress dress = Dress.createDress(user, "나이키 반바지", DressType.BOTTOM);
 
         // when

@@ -98,13 +98,50 @@ public class MeasureController {
         Mood mood = measureForm.getMood();
         String comment = measureForm.getComment();
 
+        MeasureVO measureVO = new MeasureVO();
+        measureVO.createMeasureVO(date, tempInfo, temperatureHigh, temperatureLow, humidity, area, mood, comment);
+
         if (measureForm.getDresses() == null) {
-            MeasureVO measureVO = new MeasureVO();
-            measureVO.createMeasureVO(date, tempInfo, temperatureHigh, temperatureLow, humidity, area, mood, comment);
-            measureService.updateMeasure(id, measureVO);
-            return "평가 수정 완료";
-        } else {
-            return "dress exist";
+
+            try {
+                measureService.updateMeasure(id, measureVO);
+                JsonObject obj = new JsonObject();
+                obj.addProperty("status", 200);
+                obj.addProperty("msg", "평가 수정 완료");
+                return obj.toString();
+
+            } catch (IllegalStateException e) {
+                JsonObject obj = new JsonObject();
+
+                obj.addProperty("status", 400);
+                obj.addProperty("msg", e.getMessage());
+
+                return obj.toString();
+            }
+
+        } else { // 드레스 리스트가 있을 경우
+            try {
+                measureService.updateMeasure(id, measureVO);
+                List<DressVO> dressVOList = new ArrayList<>();
+                for (MeasureDressForm mdf : dresses) {
+                    DressVO dressVO = new DressVO(mdf.getId(), mdf.getUserId(), mdf.getName(), mdf.getType(), mdf.getPartialMood());
+                    dressVOList.add(dressVO);
+                }
+                measureService.updateMeasureDress(userId, id, dressVOList);
+
+                JsonObject obj = new JsonObject();
+                obj.addProperty("status", 200);
+                obj.addProperty("msg", "평가 드레스 수정 완료");
+                return obj.toString();
+
+            } catch (IllegalStateException e) {
+                JsonObject obj = new JsonObject();
+
+                obj.addProperty("status", 400);
+                obj.addProperty("msg", e.getMessage());
+
+                return obj.toString();
+            }
         }
     }
 }
