@@ -188,4 +188,5 @@ class MeasureServiceTest {
 
         Assertions.assertEquals(user, getMeasure.getUser());
     }
+    
 }

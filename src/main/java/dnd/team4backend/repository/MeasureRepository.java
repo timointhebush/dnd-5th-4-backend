@@ -25,4 +25,9 @@ public class MeasureRepository {
     public Measure findOne(Long id) {
         return em.find(Measure.class, id);
     }
+
+    public void delete(Long id) {
+        Measure measure = em.find(Measure.class, id);
+        em.remove(measure);
+    }
 }

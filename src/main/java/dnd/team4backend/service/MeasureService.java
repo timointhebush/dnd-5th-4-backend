@@ -39,7 +39,7 @@ public class MeasureService {
         // 메져 드레스 생성
         for (DressVO dressVO : dresses) {
             // 만약 옷이 원래 없던 옷이면 dress DB에 저장하고 measureDress를 생성
-            if (dressRepository.findOne(dressVO.getId()) == null) {
+            if (dressVO.getId() == null) {
                 Dress dress = Dress.createDress(user, dressVO.getName(), dressVO.getDressType());
                 dressRepository.save(dress);
                 MeasureDress measureDress = MeasureDress.createMeasureDress(dress, dressVO.getPartialMood());
@@ -90,6 +90,11 @@ public class MeasureService {
             }
         }
 
+    }
+
+    @Transactional
+    public void deleteMeasure(Long id) {
+        measureRepository.delete(id);
     }
 
 }
