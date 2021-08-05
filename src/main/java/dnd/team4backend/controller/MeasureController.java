@@ -1,14 +1,16 @@
 package dnd.team4backend.controller;
 
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import dnd.team4backend.domain.DressVO;
-import dnd.team4backend.domain.MeasureVO;
-import dnd.team4backend.domain.Mood;
-import dnd.team4backend.domain.User;
+import dnd.team4backend.domain.*;
 import dnd.team4backend.repository.UserRepository;
 import dnd.team4backend.service.MeasureService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -172,5 +174,41 @@ public class MeasureController {
 
             return obj.toString();
         }
+    }
+
+    @GetMapping(value = "measure")
+    public String findUserMeasure(@RequestBody WeatherUserForm weatherUserForm) {
+        String userId = weatherUserForm.getUserId();
+        User user = userRepository.findOne(userId);
+        List<Measure> measureList = measureService.findByWeather(user, weatherUserForm.getTemperatureHigh(), weatherUserForm.getTemperatureLow(), weatherUserForm.getHumidity());
+
+        JsonObject obj = new JsonObject();
+        obj.addProperty("userId", weatherUserForm.getUserId());
+        obj.addProperty("temperatureHigh", weatherUserForm.getTemperatureHigh());
+        obj.addProperty("temperatureLow", weatherUserForm.getTemperatureLow());
+        obj.addProperty("humidity", weatherUserForm.getHumidity());
+
+        JsonArray measures = new JsonArray();
+        for (Measure measure : measureList) {
+            JsonObject measureObj = new JsonObject();
+            measureObj.addProperty("measureId", measure.getId());
+            measureObj.addProperty("temperatureHigh", measure.getTemperatureHigh());
+            measureObj.addProperty("temperatureLow", measure.getTemperatureLow());
+            measureObj.addProperty("humidity", measure.getHumidity());
+            measureObj.addProperty("mood", measure.getMood().toString());
+            JsonArray measureDresses = new JsonArray();
+            for (MeasureDress measureDress : measure.getMeasureDressList()) {
+                Dress dress = measureDress.getDress();
+                JsonObject dressObj = new JsonObject();
+                dressObj.addProperty("dressName", dress.getDressName());
+                dressObj.addProperty("dressType", dress.getDressType().toString());
+                dressObj.addProperty("partialMood", measureDress.getPartialMood().toString());
+                measureDresses.add(dressObj);
+            }
+            measureObj.add("measureDresses", measureDresses);
+            measures.add(measureObj);
+        }
+        obj.add("measures", measures);
+        return obj.toString();
     }
 }
