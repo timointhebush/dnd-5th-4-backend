@@ -31,6 +31,8 @@ public class MeasureRepository {
     public void delete(Long id) {
         Measure measure = em.find(Measure.class, id);
         em.remove(measure);
+    }
+
     /**
      * 특정 유저의 평가 중, 해당 날씨 데이터와 유사한
      * 평가들을 조회
