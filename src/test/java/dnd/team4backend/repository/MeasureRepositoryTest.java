@@ -26,7 +26,7 @@ public class MeasureRepositoryTest {
     public void 유사날씨_평가_조회_테스트() {
         // given
         User user1 = new User();
-        user1.addBasicInfo("testUser1", "jun", Gender.M, 25, Constitution.COLD);
+        user1.addBasicInfo("testUser1", "jun", Gender.M, Constitution.COLD);
         userRepository.save(user1);
 
         Dress dress1 = Dress.createDress(user1, "나이키 반바지", DressType.BOTTOM);
