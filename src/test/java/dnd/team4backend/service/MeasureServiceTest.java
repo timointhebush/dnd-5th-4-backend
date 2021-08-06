@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -27,11 +26,10 @@ class MeasureServiceTest {
 
 
     @Test
-    @Rollback(value = false)
     public void 날씨평가() throws Exception {
         //given
         User user = new User();
-        user.addBasicInfo("fasffasd", "hh", Gender.M, Constitution.HOT);
+        user.addBasicInfo("aaa", "hh", Gender.M, Constitution.HOT);
 
         em.persist(user);
 
@@ -61,7 +59,6 @@ class MeasureServiceTest {
     }
 
     @Test
-    @Rollback(value = false)
     public void 날씨평가_옷이DB에있을경우() throws Exception {
         //given
         User user = new User();
@@ -101,7 +98,6 @@ class MeasureServiceTest {
     }
 
     @Test
-    @Rollback(value = false)
     public void 메져_수정() throws Exception {
         //given
         User user = new User();
@@ -143,7 +139,6 @@ class MeasureServiceTest {
     }
 
     @Test
-    @Rollback(value = false)
     public void 메져드레스_수정() throws Exception {
         //given
         User user = new User();
@@ -188,5 +183,5 @@ class MeasureServiceTest {
 
         Assertions.assertEquals(user, getMeasure.getUser());
     }
-    
+
 }
