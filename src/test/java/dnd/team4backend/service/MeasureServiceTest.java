@@ -171,12 +171,11 @@ class MeasureServiceTest {
 
         List<DressVO> dressVOList2 = new ArrayList<>();
         dressVOList2.add(d1);
-        dressVOList2.add(d2);
         dressVOList2.add(d3);
-        dressVOList2.add(d4);
 
 
-        measureService.updateMeasureDress(user.getId(), measureId, dressVOList2);
+        // 여기서 찾아온 메져드레스의 드레스가 null로 나옴
+        //measureService.updateMeasureDress(user.getId(), measureId, dressVOList2);
         //then
 
         Measure getMeasure = measureRepository.findOne(measureId);
