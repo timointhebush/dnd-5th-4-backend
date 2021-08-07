@@ -55,7 +55,7 @@ class MeasureServiceTest {
 
         //then
 
-        Measure getMeasure = measureRepository.findOne(measureId);
+        Measure getMeasure = measureRepository.getById(measureId);
 
         Assertions.assertEquals(user, getMeasure.getUser());
     }
@@ -95,7 +95,7 @@ class MeasureServiceTest {
 
         //then
 
-        Measure getMeasure = measureRepository.findOne(measureId);
+        Measure getMeasure = measureRepository.getById(measureId);
 
         Assertions.assertEquals(user, getMeasure.getUser());
     }
@@ -137,7 +137,7 @@ class MeasureServiceTest {
 
         //then
 
-        Measure getMeasure = measureRepository.findOne(measureId);
+        Measure getMeasure = measureRepository.getById(measureId);
 
         Assertions.assertEquals(user, getMeasure.getUser());
     }
@@ -184,9 +184,9 @@ class MeasureServiceTest {
         measureService.updateMeasureDress(user.getId(), measureId, dressVOList2);
         //then
 
-        Measure getMeasure = measureRepository.findOne(measureId);
+        Measure getMeasure = measureRepository.getById(measureId);
 
         Assertions.assertEquals(user, getMeasure.getUser());
     }
-    
+
 }

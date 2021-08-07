@@ -26,7 +26,7 @@ public class MeasureRepositoryTest {
     public void 유사날씨_평가_조회_테스트() {
         // given
         User user1 = new User();
-        user1.addBasicInfo("testUser1", "jun", Gender.M, 25, Constitution.COLD);
+        user1.addBasicInfo("testUser1", "jun", Gender.M, Constitution.COLD);
         userRepository.save(user1);
 
         Dress dress1 = Dress.createDress(user1, "나이키 반바지", DressType.BOTTOM);
@@ -50,11 +50,11 @@ public class MeasureRepositoryTest {
 
         // when
         // 최고온도, 최저온도, 습도가 비슷할때
-        List<Measure> findMeasureList = measureRepository.findByWeather(user1, 31.3F, 24.2F, 15F);
+        List<Measure> findMeasureList = measureRepository.findByUserAndTemperatureHighBetweenOrTemperatureLowBetweenOrHumidityBetween(user1, 30.3F, 32.3F, 23.2F, 24.2F, 14F, 16F);
         // 하나도 비슷하지않을때
-        List<Measure> emptyMeasureList = measureRepository.findByWeather(user1, 33F, 26F, 17F);
+        List<Measure> emptyMeasureList = measureRepository.findByUserAndTemperatureHighBetweenOrTemperatureLowBetweenOrHumidityBetween(user1, 32F, 34F, 25F, 27F, 16F, 18F);
         // 하나의 요소만 비슷
-        List<Measure> findMeasureList2 = measureRepository.findByWeather(user1, 33F, 26F, 15.3F);
+        List<Measure> findMeasureList2 = measureRepository.findByUserAndTemperatureHighBetweenOrTemperatureLowBetweenOrHumidityBetween(user1, 32F, 34F, 25F, 27F, 14.3F, 16.3F);
 
         // then
         List<Measure> measureList = new ArrayList<>();
