@@ -66,13 +66,13 @@ public class MeasureService {
 
     @Transactional
     public void updateMeasure(Long measureId, MeasureVO measureVO) { // measureVO는 수정된정보를 가지고 있는 measure
-        Measure measure = measureRepository.findOne(measureId);
+        Measure measure = measureRepository.getById(measureId);
         measure.modifyMeasure(measureVO);
     }
 
     @Transactional
     public void updateMeasureDress(String userId, Long measureId, List<DressVO> dresses) {
-        Measure measure = measureRepository.findOne(measureId);
+        Measure measure = measureRepository.getById(measureId);
         User user = userRepository.findOne(userId);
 
         List<MeasureDress> measureDressList = measure.getMeasureDressList();
@@ -94,11 +94,17 @@ public class MeasureService {
 
     @Transactional
     public void deleteMeasure(Long id) {
-        measureRepository.delete(id);
+        measureRepository.deleteById(id);
     }
-    
+
     public List<Measure> findByWeather(User user, Float temperatureHigh, Float temperatureLow, Float humidity) {
-        return measureRepository.findByWeather(user, temperatureHigh, temperatureLow, humidity);
+        Float tempHigh1 = temperatureHigh - 1F;
+        Float tempHigh2 = temperatureHigh + 1F;
+        Float tempLow1 = temperatureLow - 1F;
+        Float tempLow2 = temperatureLow + 1F;
+        Float humid1 = humidity - 2F;
+        Float humid2 = humidity + 2F;
+        return measureRepository.findByUserAndTemperatureHighBetweenOrTemperatureLowBetweenOrHumidityBetween(user, tempHigh1, tempHigh2, tempLow1, tempLow2, humid1, humid2);
     }
 
 }
