@@ -5,6 +5,8 @@ import dnd.team4backend.repository.DressRepository;
 import dnd.team4backend.repository.MeasureDressRepository;
 import dnd.team4backend.repository.MeasureRepository;
 import dnd.team4backend.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -97,14 +99,24 @@ public class MeasureService {
         measureRepository.deleteById(id);
     }
 
-    public List<Measure> findByWeather(User user, Float temperatureHigh, Float temperatureLow, Float humidity) {
+    public Page<Measure> fetchPages(Long lastMeasureId, int size, MeasureType measureType, User user, Float temperatureHigh, Float temperatureLow, Float humidity) {
+        PageRequest pageRequest = PageRequest.of(0, size);
         Float tempHigh1 = temperatureHigh - 1F;
         Float tempHigh2 = temperatureHigh + 1F;
         Float tempLow1 = temperatureLow - 1F;
         Float tempLow2 = temperatureLow + 1F;
         Float humid1 = humidity - 2F;
         Float humid2 = humidity + 2F;
-        return measureRepository.findByUserAndTemperatureHighBetweenOrTemperatureLowBetweenOrHumidityBetween(user, tempHigh1, tempHigh2, tempLow1, tempLow2, humid1, humid2);
+        if (measureType == MeasureType.USER) {
+            return measureRepository.findByWeatherOfUser(lastMeasureId, user, tempHigh1, tempHigh2, tempLow1, tempLow2, humid1, humid2, pageRequest);
+        } else // FetchType.OTHERS
+        {
+            return measureRepository.findByWeatherOfOthers(lastMeasureId, user, tempHigh1, tempHigh2, tempLow1, tempLow2, humid1, humid2, pageRequest);
+        }
     }
 
+    public List<MeasureResponse> fetchMeasurePagesBy(Long lastMeasureId, int size, MeasureType measureType, User user, Float temperatureHigh, Float temperatureLow, Float humidity) {
+        Page<Measure> measures = fetchPages(lastMeasureId, size, measureType, user, temperatureHigh, temperatureLow, humidity);
+        return MeasureAssembler.toDtos(measures.getContent());
+    }
 }
