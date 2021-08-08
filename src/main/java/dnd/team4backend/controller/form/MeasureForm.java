@@ -1,4 +1,4 @@
-package dnd.team4backend.controller;
+package dnd.team4backend.controller.form;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import dnd.team4backend.domain.Mood;

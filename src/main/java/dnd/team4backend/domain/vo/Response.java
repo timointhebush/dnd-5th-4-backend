@@ -1,4 +1,4 @@
-package dnd.team4backend.domain;
+package dnd.team4backend.domain.vo;
 
 import java.util.List;
 

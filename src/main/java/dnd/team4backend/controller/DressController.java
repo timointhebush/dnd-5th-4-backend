@@ -1,6 +1,7 @@
 package dnd.team4backend.controller;
 
 import com.google.gson.JsonObject;
+import dnd.team4backend.controller.form.DressForm;
 import dnd.team4backend.domain.Dress;
 import dnd.team4backend.domain.User;
 import dnd.team4backend.service.DressService;

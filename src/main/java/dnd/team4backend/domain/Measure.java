@@ -1,5 +1,7 @@
 package dnd.team4backend.domain;
 
+import dnd.team4backend.domain.vo.MeasureVO;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package dnd.team4backend.domain;
+package dnd.team4backend.domain.vo;
 
 public class DressResponse {
     private final Long dressId;

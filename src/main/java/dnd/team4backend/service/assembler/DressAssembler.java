@@ -1,7 +1,7 @@
-package dnd.team4backend.service;
+package dnd.team4backend.service.assembler;
 
-import dnd.team4backend.domain.DressResponse;
 import dnd.team4backend.domain.MeasureDress;
+import dnd.team4backend.domain.vo.DressResponse;
 
 public class DressAssembler {
     public static DressResponse toDto(MeasureDress measureDress) {

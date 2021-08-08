@@ -1,4 +1,7 @@
-package dnd.team4backend.domain;
+package dnd.team4backend.domain.vo;
+
+import dnd.team4backend.domain.DressType;
+import dnd.team4backend.domain.Mood;
 
 public class DressVO {
 

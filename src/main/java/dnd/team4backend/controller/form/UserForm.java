@@ -1,4 +1,4 @@
-package dnd.team4backend.controller;
+package dnd.team4backend.controller.form;
 
 
 import dnd.team4backend.domain.Constitution;

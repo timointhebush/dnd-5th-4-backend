@@ -1,6 +1,8 @@
 package dnd.team4backend.service;
 
 import dnd.team4backend.domain.*;
+import dnd.team4backend.domain.vo.DressVO;
+import dnd.team4backend.domain.vo.MeasureVO;
 import dnd.team4backend.repository.MeasureRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

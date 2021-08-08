@@ -1,10 +1,14 @@
 package dnd.team4backend.service;
 
 import dnd.team4backend.domain.*;
+import dnd.team4backend.domain.vo.DressVO;
+import dnd.team4backend.domain.vo.MeasureResponse;
+import dnd.team4backend.domain.vo.MeasureVO;
 import dnd.team4backend.repository.DressRepository;
 import dnd.team4backend.repository.MeasureDressRepository;
 import dnd.team4backend.repository.MeasureRepository;
 import dnd.team4backend.repository.UserRepository;
+import dnd.team4backend.service.assembler.MeasureAssembler;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package dnd.team4backend.controller;
+package dnd.team4backend.controller.form;
 
 public class MeasurePageForm {
     private String userId;

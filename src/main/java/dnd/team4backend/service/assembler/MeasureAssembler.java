@@ -1,9 +1,9 @@
-package dnd.team4backend.service;
+package dnd.team4backend.service.assembler;
 
-import dnd.team4backend.domain.DressResponse;
 import dnd.team4backend.domain.Measure;
 import dnd.team4backend.domain.MeasureDress;
-import dnd.team4backend.domain.MeasureResponse;
+import dnd.team4backend.domain.vo.DressResponse;
+import dnd.team4backend.domain.vo.MeasureResponse;
 
 import java.util.List;
 import java.util.stream.Collectors;
