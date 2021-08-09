@@ -51,7 +51,7 @@ public class MeasureService {
                 MeasureDress measureDress = MeasureDress.createMeasureDress(dress, dressVO.getPartialMood());
                 measureDressList.add(measureDress);
             } else { // 원래 있던 옷이면 dress DB에서 그 옷 찾아서 measureDress 생성
-                Dress dress = dressRepository.findOne(dressVO.getId());
+                Dress dress = dressRepository.getById(dressVO.getId());
                 MeasureDress measureDress = MeasureDress.createMeasureDress(dress, dressVO.getPartialMood());
                 measureDressList.add(measureDress);
             }
@@ -86,7 +86,7 @@ public class MeasureService {
             MeasureDress findMeasureDress = measureDressRepository.findOne(measureDress.getId());
             for (DressVO dressVO : dresses) {
                 if (dressVO.getId() == findMeasureDress.getDress().getId()) {
-                    Dress dress = dressRepository.findOne(findMeasureDress.getDress().getId());
+                    Dress dress = dressRepository.getById(findMeasureDress.getDress().getId());
                     dress.setDressName(dressVO.getName());
                     dress.setDressType(dressVO.getDressType());
                     dressRepository.save(dress);

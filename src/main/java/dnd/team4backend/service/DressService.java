@@ -20,6 +20,11 @@ public class DressService {
     }
 
     public Dress findOne(Long dressId) {
-        return dressRepository.findOne(dressId);
+        return dressRepository.getById(dressId);
+    }
+
+    @Transactional
+    public void deleteDress(Long dressId) {
+        dressRepository.deleteById(dressId);
     }
 }
