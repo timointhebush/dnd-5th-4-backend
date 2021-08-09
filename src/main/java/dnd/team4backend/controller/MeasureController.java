@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import dnd.team4backend.controller.form.MeasureDressForm;
 import dnd.team4backend.controller.form.MeasureForm;
 import dnd.team4backend.controller.form.MeasurePageForm;
+import dnd.team4backend.controller.form.UserForm;
 import dnd.team4backend.domain.MeasureType;
 import dnd.team4backend.domain.Mood;
 import dnd.team4backend.domain.User;
@@ -203,5 +204,18 @@ public class MeasureController {
         }
     }
 
+    @GetMapping(value = "measure/calendar")
+    public ResponseEntity getUserMeasuresYearMonth(@RequestParam int year, @RequestParam int month, @RequestBody UserForm userForm) {
+        try {
+            User user = userRepository.findOne(userForm.getUserId());
+            List<MeasureCalendarResponse> measureCalendarResponses = measureService.findByYearMonth(user, year, month);
+            MeasureCalendarResponseEntity responseEntity = new MeasureCalendarResponseEntity(
+                    200, "유저의 해당 년, 월 평가들을 조회하였습니다.", measureCalendarResponses);
+            return new ResponseEntity(responseEntity, HttpStatus.OK);
+        } catch (IllegalStateException e) {
+            BasicResponseEntity responseEntity = new BasicResponseEntity(400, "평가 조회 중 오류가 발생했습니다.");
+            return new ResponseEntity(responseEntity, HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

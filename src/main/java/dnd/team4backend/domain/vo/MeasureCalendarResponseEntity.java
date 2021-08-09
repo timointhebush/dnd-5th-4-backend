@@ -9,4 +9,8 @@ public class MeasureCalendarResponseEntity extends BasicResponseEntity{
         super(status, msg);
         this.measures = measures;
     }
+
+    public List<MeasureCalendarResponse> getMeasures() {
+        return measures;
+    }
 }
