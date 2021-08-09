@@ -8,10 +8,7 @@ import dnd.team4backend.controller.form.MeasurePageForm;
 import dnd.team4backend.domain.MeasureType;
 import dnd.team4backend.domain.Mood;
 import dnd.team4backend.domain.User;
-import dnd.team4backend.domain.vo.DressVO;
-import dnd.team4backend.domain.vo.MeasureResponse;
-import dnd.team4backend.domain.vo.MeasureVO;
-import dnd.team4backend.domain.vo.Response;
+import dnd.team4backend.domain.vo.*;
 import dnd.team4backend.repository.UserRepository;
 import dnd.team4backend.service.MeasureService;
 import org.springframework.http.HttpStatus;
@@ -183,27 +180,28 @@ public class MeasureController {
     }
 
     @GetMapping(value = "measure")
-    public ResponseEntity<Response> getMeasurePagesUser(@RequestParam Long lastMeasureId, @RequestParam int size, @RequestParam String measureType, @RequestBody MeasurePageForm measurePageForm) {
+    public ResponseEntity getMeasurePagesUser(@RequestParam Long lastMeasureId, @RequestParam int size, @RequestParam String measureType, @RequestBody MeasurePageForm measurePageForm) {
         try {
             User user = userRepository.findOne(measurePageForm.getUserId());
             Float temperatureHigh = measurePageForm.getTemperatureHigh();
             Float temperatureLow = measurePageForm.getTemperatureLow();
             Float humidity = measurePageForm.getHumidity();
             List<MeasureResponse> measureResponses = new ArrayList<>();
-            Response response;
+            BasicResponseEntity basicResponseEntity;
             if (measureType.equals("others")) {
                 measureResponses = measureService.fetchMeasurePagesBy(lastMeasureId, size, MeasureType.OTHERS, user, temperatureHigh, temperatureLow, humidity);
-                response = new Response(200, "해당 유저를 제외한 다른 유저들의 평가를 조회하였습니다.", measureResponses);
+                basicResponseEntity = new MeasureResponseEntity(200, "해당 유저를 제외한 다른 유저들의 평가를 조회하였습니다.", measureResponses);
             } else // measureType == "user"
             {
                 measureResponses = measureService.fetchMeasurePagesBy(lastMeasureId, size, MeasureType.USER, user, temperatureHigh, temperatureLow, humidity);
-                response = new Response(200, "해당 유저의 평가를 조회하였습니다.", measureResponses);
+                basicResponseEntity = new MeasureResponseEntity(200, "해당 유저의 평가를 조회하였습니다.", measureResponses);
             }
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity(basicResponseEntity, HttpStatus.OK);
         } catch (IllegalStateException e) {
-            List<MeasureResponse> emptyMeasureResponses = new ArrayList<>();
-            Response response = new Response(400, "평가 조회 중 오류가 발생했습니다.", emptyMeasureResponses);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            BasicResponseEntity basicResponseEntity = new BasicResponseEntity(400, "평가 조회 중 오류가 발생했습니다.");
+            return new ResponseEntity(basicResponseEntity, HttpStatus.BAD_REQUEST);
         }
     }
+
+
 }
