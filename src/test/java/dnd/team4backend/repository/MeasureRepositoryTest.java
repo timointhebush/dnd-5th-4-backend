@@ -113,7 +113,7 @@ public class MeasureRepositoryTest {
         LocalDate startDate = LocalDate.of(2021, 8, 1);
         LocalDate endDate = LocalDate.of(2021,8, 3);
 
-        List<Measure> findMeasures = measureRepository.findByDateBetween(LocalDateTime.of(startDate, startTime), LocalDateTime.of(endDate, endTime));
+        List<Measure> findMeasures = measureRepository.findByUserAndDateBetween(user1, LocalDateTime.of(startDate, startTime), LocalDateTime.of(endDate, endTime));
 
         // then
         Assertions.assertEquals(measureList, findMeasures);

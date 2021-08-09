@@ -131,12 +131,12 @@ public class MeasureService {
         return MeasureAssembler.toDtos(measures.getContent());
     }
 
-    public List<MeasureCalendarResponse> findByYearMonth(int year, int month) {
+    public List<MeasureCalendarResponse> findByYearMonth(User user, int year, int month) {
         GregorianCalendar gc = new GregorianCalendar();
         int lastDayOfMonth = Month.of(month).length(gc.isLeapYear(year));
         LocalDateTime fromDateTime = LocalDateTime.of(LocalDate.of(year, month, 1), LocalTime.MIN);
         LocalDateTime toDateTime = LocalDateTime.of(LocalDate.of(year, month, lastDayOfMonth), LocalTime.MAX);
-        List<Measure> measures = measureRepository.findByDateBetween(fromDateTime, toDateTime);
+        List<Measure> measures = measureRepository.findByUserAndDateBetween(user, fromDateTime, toDateTime);
         return MeasureCalendarAssembler.toDtos(measures);
     }
 }

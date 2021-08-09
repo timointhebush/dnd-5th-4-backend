@@ -217,7 +217,7 @@ class MeasureServiceTest {
         Long measureId2 = measureService.measure(user.getId(), dressVOList, measureVO2);
 
         // when
-        List<MeasureCalendarResponse> findMeasureCalendarResponses = measureService.findByYearMonth(2021, 8);
+        List<MeasureCalendarResponse> findMeasureCalendarResponses = measureService.findByYearMonth(user, 2021, 8);
         List<MeasureCalendarResponse> measureCalendarResponses = new ArrayList<>();
         measureCalendarResponses.add(MeasureCalendarAssembler.toDto(measureRepository.getById(measureId1)));
         measureCalendarResponses.add(MeasureCalendarAssembler.toDto(measureRepository.getById(measureId2)));

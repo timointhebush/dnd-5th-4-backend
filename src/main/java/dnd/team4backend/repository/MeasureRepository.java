@@ -25,5 +25,5 @@ public interface MeasureRepository extends JpaRepository<Measure, Long> {
     @Query("select m from Measure m where m.id < ?1 and m.user <> ?2 and (m.temperatureHigh between ?3 and ?4 or m.temperatureLow between ?5 and ?6 or m.humidity between ?7 and ?8) order by m.id desc")
     Page<Measure> findByWeatherOfOthers(Long measureId, User user, Float tempHigh1, Float tempHigh2, Float tempLow1, Float tempLow2, Float humid1, Float humid2, Pageable pageable);
 
-    List<Measure> findByDateBetween(LocalDateTime fromLocalDateTime, LocalDateTime toLocalDateTime);
+    List<Measure> findByUserAndDateBetween(User user, LocalDateTime fromLocalDateTime, LocalDateTime toLocalDateTime);
 }
