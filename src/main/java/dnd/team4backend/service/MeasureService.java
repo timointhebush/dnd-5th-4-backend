@@ -1,10 +1,16 @@
 package dnd.team4backend.service;
 
 import dnd.team4backend.domain.*;
+import dnd.team4backend.domain.vo.DressVO;
+import dnd.team4backend.domain.vo.MeasureResponse;
+import dnd.team4backend.domain.vo.MeasureVO;
 import dnd.team4backend.repository.DressRepository;
 import dnd.team4backend.repository.MeasureDressRepository;
 import dnd.team4backend.repository.MeasureRepository;
 import dnd.team4backend.repository.UserRepository;
+import dnd.team4backend.service.assembler.MeasureAssembler;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,13 +72,13 @@ public class MeasureService {
 
     @Transactional
     public void updateMeasure(Long measureId, MeasureVO measureVO) { // measureVO는 수정된정보를 가지고 있는 measure
-        Measure measure = measureRepository.findOne(measureId);
+        Measure measure = measureRepository.getById(measureId);
         measure.modifyMeasure(measureVO);
     }
 
     @Transactional
     public void updateMeasureDress(String userId, Long measureId, List<DressVO> dresses) {
-        Measure measure = measureRepository.findOne(measureId);
+        Measure measure = measureRepository.getById(measureId);
         User user = userRepository.findOne(userId);
 
         List<MeasureDress> measureDressList = measure.getMeasureDressList();
@@ -94,11 +100,27 @@ public class MeasureService {
 
     @Transactional
     public void deleteMeasure(Long id) {
-        measureRepository.delete(id);
-    }
-    
-    public List<Measure> findByWeather(User user, Float temperatureHigh, Float temperatureLow, Float humidity) {
-        return measureRepository.findByWeather(user, temperatureHigh, temperatureLow, humidity);
+        measureRepository.deleteById(id);
     }
 
+    public Page<Measure> fetchPages(Long lastMeasureId, int size, MeasureType measureType, User user, Float temperatureHigh, Float temperatureLow, Float humidity) {
+        PageRequest pageRequest = PageRequest.of(0, size);
+        Float tempHigh1 = temperatureHigh - 1F;
+        Float tempHigh2 = temperatureHigh + 1F;
+        Float tempLow1 = temperatureLow - 1F;
+        Float tempLow2 = temperatureLow + 1F;
+        Float humid1 = humidity - 2F;
+        Float humid2 = humidity + 2F;
+        if (measureType == MeasureType.USER) {
+            return measureRepository.findByWeatherOfUser(lastMeasureId, user, tempHigh1, tempHigh2, tempLow1, tempLow2, humid1, humid2, pageRequest);
+        } else // FetchType.OTHERS
+        {
+            return measureRepository.findByWeatherOfOthers(lastMeasureId, user, tempHigh1, tempHigh2, tempLow1, tempLow2, humid1, humid2, pageRequest);
+        }
+    }
+
+    public List<MeasureResponse> fetchMeasurePagesBy(Long lastMeasureId, int size, MeasureType measureType, User user, Float temperatureHigh, Float temperatureLow, Float humidity) {
+        Page<Measure> measures = fetchPages(lastMeasureId, size, measureType, user, temperatureHigh, temperatureLow, humidity);
+        return MeasureAssembler.toDtos(measures.getContent());
+    }
 }

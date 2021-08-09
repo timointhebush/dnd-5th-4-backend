@@ -1,6 +1,8 @@
 package dnd.team4backend.service;
 
 import dnd.team4backend.domain.*;
+import dnd.team4backend.domain.vo.DressVO;
+import dnd.team4backend.domain.vo.MeasureVO;
 import dnd.team4backend.repository.MeasureRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -53,7 +55,7 @@ class MeasureServiceTest {
 
         //then
 
-        Measure getMeasure = measureRepository.findOne(measureId);
+        Measure getMeasure = measureRepository.getById(measureId);
 
         Assertions.assertEquals(user, getMeasure.getUser());
     }
@@ -92,7 +94,7 @@ class MeasureServiceTest {
 
         //then
 
-        Measure getMeasure = measureRepository.findOne(measureId);
+        Measure getMeasure = measureRepository.getById(measureId);
 
         Assertions.assertEquals(user, getMeasure.getUser());
     }
@@ -133,7 +135,7 @@ class MeasureServiceTest {
 
         //then
 
-        Measure getMeasure = measureRepository.findOne(measureId);
+        Measure getMeasure = measureRepository.getById(measureId);
 
         Assertions.assertEquals(user, getMeasure.getUser());
     }
@@ -178,7 +180,7 @@ class MeasureServiceTest {
         //measureService.updateMeasureDress(user.getId(), measureId, dressVOList2);
         //then
 
-        Measure getMeasure = measureRepository.findOne(measureId);
+        Measure getMeasure = measureRepository.getById(measureId);
 
         Assertions.assertEquals(user, getMeasure.getUser());
     }

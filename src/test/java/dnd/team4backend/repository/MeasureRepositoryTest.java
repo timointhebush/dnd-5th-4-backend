@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -50,20 +52,23 @@ public class MeasureRepositoryTest {
 
         // when
         // 최고온도, 최저온도, 습도가 비슷할때
-        List<Measure> findMeasureList = measureRepository.findByWeather(user1, 31.3F, 24.2F, 15F);
+        PageRequest pageRequest1 = PageRequest.of(0, 2);
+        Page<Measure> findMeasureList = measureRepository.findByWeatherOfUser(23L, user1, 30.3F, 32.3F, 23.2F, 24.2F, 14F, 16F, pageRequest1);
         // 하나도 비슷하지않을때
-        List<Measure> emptyMeasureList = measureRepository.findByWeather(user1, 33F, 26F, 17F);
+        PageRequest pageRequest2 = PageRequest.of(0, 2);
+        Page<Measure> emptyMeasureList = measureRepository.findByWeatherOfUser(23L, user1, 32F, 34F, 25F, 27F, 16F, 18F, pageRequest2);
         // 하나의 요소만 비슷
-        List<Measure> findMeasureList2 = measureRepository.findByWeather(user1, 33F, 26F, 15.3F);
+        PageRequest pageRequest3 = PageRequest.of(0, 2);
+        Page<Measure> findMeasureList2 = measureRepository.findByWeatherOfUser(23L, user1, 32F, 34F, 25F, 27F, 14.3F, 16.3F, pageRequest3);
 
         // then
         List<Measure> measureList = new ArrayList<>();
-        measureList.add(measure1);
         measureList.add(measure2);
+        measureList.add(measure1);
         List<Measure> emptyList = new ArrayList<>();
 
-        Assertions.assertEquals(measureList, findMeasureList);
-        Assertions.assertEquals(emptyList, emptyMeasureList);
-        Assertions.assertEquals(measureList, findMeasureList2);
+        Assertions.assertEquals(measureList, findMeasureList.getContent());
+        Assertions.assertEquals(emptyList, emptyMeasureList.getContent());
+        Assertions.assertEquals(measureList, findMeasureList2.getContent());
     }
 }

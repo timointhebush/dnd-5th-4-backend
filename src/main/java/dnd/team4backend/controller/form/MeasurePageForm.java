@@ -1,6 +1,6 @@
-package dnd.team4backend.controller;
+package dnd.team4backend.controller.form;
 
-public class WeatherUserForm {
+public class MeasurePageForm {
     private String userId;
     private Float temperatureHigh;
     private Float temperatureLow;
