@@ -4,6 +4,7 @@ plugins {
     id 'java'
 }
 
+archivesBaseName = 'team4backend'
 group = 'dnd'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
