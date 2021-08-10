@@ -2,6 +2,7 @@ package dnd.team4backend.service;
 
 import dnd.team4backend.domain.*;
 import dnd.team4backend.domain.vo.DressVO;
+import dnd.team4backend.domain.vo.MeasureCalendarResponse;
 import dnd.team4backend.domain.vo.MeasureResponse;
 import dnd.team4backend.domain.vo.MeasureVO;
 import dnd.team4backend.repository.DressRepository;
@@ -9,12 +10,18 @@ import dnd.team4backend.repository.MeasureDressRepository;
 import dnd.team4backend.repository.MeasureRepository;
 import dnd.team4backend.repository.UserRepository;
 import dnd.team4backend.service.assembler.MeasureAssembler;
+import dnd.team4backend.service.assembler.MeasureCalendarAssembler;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Service
@@ -122,5 +129,14 @@ public class MeasureService {
     public List<MeasureResponse> fetchMeasurePagesBy(Long lastMeasureId, int size, MeasureType measureType, User user, Float temperatureHigh, Float temperatureLow, Float humidity) {
         Page<Measure> measures = fetchPages(lastMeasureId, size, measureType, user, temperatureHigh, temperatureLow, humidity);
         return MeasureAssembler.toDtos(measures.getContent());
+    }
+
+    public List<MeasureCalendarResponse> findByYearMonth(User user, int year, int month) {
+        GregorianCalendar gc = new GregorianCalendar();
+        int lastDayOfMonth = Month.of(month).length(gc.isLeapYear(year));
+        LocalDateTime fromDateTime = LocalDateTime.of(LocalDate.of(year, month, 1), LocalTime.MIN);
+        LocalDateTime toDateTime = LocalDateTime.of(LocalDate.of(year, month, lastDayOfMonth), LocalTime.MAX);
+        List<Measure> measures = measureRepository.findByUserAndDateBetween(user, fromDateTime, toDateTime);
+        return MeasureCalendarAssembler.toDtos(measures);
     }
 }
