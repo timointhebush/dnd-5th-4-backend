@@ -7,14 +7,11 @@ import dnd.team4backend.domain.Dress;
 import dnd.team4backend.domain.User;
 import dnd.team4backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 
@@ -49,12 +46,8 @@ public class UserController {
     }
 
     @GetMapping(value = "name")
-    public String isExistedNickName(@RequestBody UserForm userForm, HttpServletResponse response) {
+    public String isExistedNickName(@RequestBody UserForm userForm) {
         boolean isExistNickName = userService.isExistedNickName(userForm.getName());
-
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Methods", "GET");
-        response.addHeader("Access-Control-Allow-Headers", "Content-Type");
 
         if (!isExistNickName) {
             JsonObject obj = new JsonObject();
