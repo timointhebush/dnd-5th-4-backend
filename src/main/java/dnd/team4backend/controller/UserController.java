@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -48,8 +49,13 @@ public class UserController {
     }
 
     @GetMapping(value = "name")
-    public String isExistedNickName(@RequestBody UserForm userForm) {
+    public String isExistedNickName(@RequestBody UserForm userForm, HttpServletResponse response) {
         boolean isExistNickName = userService.isExistedNickName(userForm.getName());
+
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET");
+        response.addHeader("Access-Control-Allow-Headers", "Content-Type");
+
         if (!isExistNickName) {
             JsonObject obj = new JsonObject();
 
