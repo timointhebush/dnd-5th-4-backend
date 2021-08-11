@@ -9,9 +9,10 @@ import dnd.team4backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RestController
 public class UserController {
 
@@ -46,8 +47,11 @@ public class UserController {
     }
 
     @GetMapping(value = "name")
-    public String isExistedNickName(@RequestBody UserForm userForm) {
+    public String isExistedNickName(@RequestBody UserForm userForm, HttpServletResponse response) {
         boolean isExistNickName = userService.isExistedNickName(userForm.getName());
+
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
 
         if (!isExistNickName) {
             JsonObject obj = new JsonObject();
