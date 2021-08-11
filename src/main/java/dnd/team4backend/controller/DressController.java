@@ -11,6 +11,8 @@ import dnd.team4backend.service.UserService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
+
+@CrossOrigin(origins = "*")
 @RestController
 public class DressController {
     private final DressService dressService;
