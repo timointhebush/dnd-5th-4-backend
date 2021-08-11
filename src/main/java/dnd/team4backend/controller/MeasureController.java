@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class MeasureController {
 
@@ -229,7 +230,7 @@ public class MeasureController {
                     measureResponseList
             );
             return new ResponseEntity(responseEntity, HttpStatus.OK);
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             BasicResponseEntity responseEntity = new BasicResponseEntity(400, "평가 조회 중 오류가 발생했습니다.");
             return new ResponseEntity(responseEntity, HttpStatus.BAD_REQUEST);
         }
