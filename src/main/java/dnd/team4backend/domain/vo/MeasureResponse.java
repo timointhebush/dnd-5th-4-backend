@@ -7,6 +7,7 @@ public class MeasureResponse {
     private final Long measureId;
     private final String userId;
     private final String userName;
+    private final String userConstitution;
     private final LocalDateTime date;
     private final String tempInfo;
     private final Float temperatureHigh;
@@ -17,10 +18,11 @@ public class MeasureResponse {
     private final String comment;
     private final List<DressResponse> dressResponses;
 
-    public MeasureResponse(Long measureId, String userId, String userName, LocalDateTime date, String tempInfo, Float temperatureHigh, Float temperatureLow, Float humidity, String area, String mood, String comment, List<DressResponse> dressResponses) {
+    public MeasureResponse(Long measureId, String userId, String userName, String userConstitution, LocalDateTime date, String tempInfo, Float temperatureHigh, Float temperatureLow, Float humidity, String area, String mood, String comment, List<DressResponse> dressResponses) {
         this.measureId = measureId;
         this.userId = userId;
         this.userName = userName;
+        this.userConstitution = userConstitution;
         this.date = date;
         this.tempInfo = tempInfo;
         this.temperatureHigh = temperatureHigh;
@@ -42,6 +44,10 @@ public class MeasureResponse {
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getUserConstitution() {
+        return userConstitution;
     }
 
     public LocalDateTime getDate() {

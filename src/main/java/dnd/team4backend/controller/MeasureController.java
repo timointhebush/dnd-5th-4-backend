@@ -4,8 +4,6 @@ package dnd.team4backend.controller;
 import com.google.gson.JsonObject;
 import dnd.team4backend.controller.form.MeasureDressForm;
 import dnd.team4backend.controller.form.MeasureForm;
-import dnd.team4backend.controller.form.MeasurePageForm;
-import dnd.team4backend.controller.form.UserForm;
 import dnd.team4backend.domain.MeasureType;
 import dnd.team4backend.domain.Mood;
 import dnd.team4backend.domain.User;
@@ -182,20 +180,19 @@ public class MeasureController {
     }
 
     @GetMapping(value = "measure")
-    public ResponseEntity getMeasurePagesUser(@RequestParam Long lastMeasureId, @RequestParam int size, @RequestParam String measureType, @RequestBody MeasurePageForm measurePageForm) {
+    public ResponseEntity getMeasurePagesUser(@RequestParam String userId, @RequestParam Float tempHigh,
+                                              @RequestParam Float tempLow, @RequestParam Float humid,
+                                              @RequestParam Long lastMeasureId, @RequestParam int size, @RequestParam String measureType) {
         try {
-            User user = userRepository.findOne(measurePageForm.getUserId());
-            Float temperatureHigh = measurePageForm.getTemperatureHigh();
-            Float temperatureLow = measurePageForm.getTemperatureLow();
-            Float humidity = measurePageForm.getHumidity();
+            User user = userRepository.findOne(userId);
             List<MeasureResponse> measureResponses = new ArrayList<>();
             BasicResponseEntity basicResponseEntity;
             if (measureType.equals("others")) {
-                measureResponses = measureService.fetchMeasurePagesBy(lastMeasureId, size, MeasureType.OTHERS, user, temperatureHigh, temperatureLow, humidity);
+                measureResponses = measureService.fetchMeasurePagesBy(lastMeasureId, size, MeasureType.OTHERS, user, tempHigh, tempLow, humid);
                 basicResponseEntity = new MeasureResponseEntity(200, "해당 유저를 제외한 다른 유저들의 평가를 조회하였습니다.", measureResponses);
             } else // measureType == "user"
             {
-                measureResponses = measureService.fetchMeasurePagesBy(lastMeasureId, size, MeasureType.USER, user, temperatureHigh, temperatureLow, humidity);
+                measureResponses = measureService.fetchMeasurePagesBy(lastMeasureId, size, MeasureType.USER, user, tempHigh, tempLow, humid);
                 basicResponseEntity = new MeasureResponseEntity(200, "해당 유저의 평가를 조회하였습니다.", measureResponses);
             }
             return new ResponseEntity(basicResponseEntity, HttpStatus.OK);
@@ -206,9 +203,9 @@ public class MeasureController {
     }
 
     @GetMapping(value = "measure/calendar")
-    public ResponseEntity getUserMeasuresYearMonth(@RequestParam int year, @RequestParam int month, @RequestBody UserForm userForm) {
+    public ResponseEntity getUserMeasuresYearMonth(@RequestParam String userId, @RequestParam int year, @RequestParam int month) {
         try {
-            User user = userRepository.findOne(userForm.getUserId());
+            User user = userRepository.findOne(userId);
             List<MeasureCalendarResponse> measureCalendarResponses = measureService.findByYearMonth(user, year, month);
             MeasureCalendarResponseEntity responseEntity = new MeasureCalendarResponseEntity(
                     200, "유저의 해당 년, 월 평가들을 조회하였습니다.", measureCalendarResponses);
