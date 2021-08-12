@@ -23,8 +23,8 @@ public class UserController {
     }
 
     @GetMapping(value = "user")
-    public String isOurMember(@RequestBody UserForm userForm) {
-        User user = userService.findOne(userForm.getUserId());
+    public String isOurMember(@RequestParam String userId) {
+        User user = userService.findOne(userId);
         if (user == null) {
             JsonObject obj = new JsonObject();
 
@@ -46,8 +46,8 @@ public class UserController {
     }
 
     @GetMapping(value = "name")
-    public String isExistedNickName(@RequestBody UserForm userForm) {
-        boolean isExistNickName = userService.isExistedNickName(userForm.getName());
+    public String isExistedNickName(@RequestParam String name) {
+        boolean isExistNickName = userService.isExistedNickName(name);
 
         if (!isExistNickName) {
             JsonObject obj = new JsonObject();
@@ -104,8 +104,8 @@ public class UserController {
     }
 
     @GetMapping(value = "user/dresses")
-    public String userDressList(@RequestBody UserForm userForm) {
-        User user = userService.findOne(userForm.getUserId());
+    public String userDressList(@RequestParam String userId) {
+        User user = userService.findOne(userId);
         if (user == null) {
             JsonObject obj = new JsonObject();
             obj.addProperty("status", 400);
