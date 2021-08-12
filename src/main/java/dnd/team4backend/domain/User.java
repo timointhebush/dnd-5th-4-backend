@@ -39,6 +39,9 @@ public class User {
         return gender;
     }
 
+    public Constitution getConstitution() {
+        return constitution;
+    }
 
     public List<Measure> getMeasureList() {
         return measureList;

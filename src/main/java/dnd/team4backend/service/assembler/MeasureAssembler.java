@@ -16,7 +16,7 @@ public class MeasureAssembler {
                 .collect(Collectors.toList());
         MeasureResponse measureResponse = new MeasureResponse(
                 measure.getId(), measure.getUser().getId(), measure.getUser().getName(),
-                measure.getDate(), measure.getTempInfo(), measure.getTemperatureHigh(),
+                measure.getUser().getConstitution().toString(), measure.getDate(), measure.getTempInfo(), measure.getTemperatureHigh(),
                 measure.getTemperatureLow(), measure.getHumidity(), measure.getArea(),
                 measure.getMood().toString(), measure.getComment(), dressResponses
         );
