@@ -1,11 +1,15 @@
+jasypt:
+  encryptor:
+    bean: encryptorBean
+
 spring:
   profiles:
     active: dev
 
   datasource:
     url: jdbc:mysql://localhost:3306/example?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: dlghksgml97
+    username: ENC(s3Lvy9x/XY+/iEeg4EERRO6IvXIqJ30oM2AuP0BVOpNAUce/6JdqTnMjGJp6xK3h)
+    password: ENC(OxZUrND8Ah06HcVMtgjuEvMvmMpRUy8I9E9WD64vmla80jZaZRwnwYZ97wgZQP8m)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
