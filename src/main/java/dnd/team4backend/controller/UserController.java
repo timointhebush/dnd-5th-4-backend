@@ -5,8 +5,14 @@ import com.google.gson.JsonObject;
 import dnd.team4backend.controller.form.UserForm;
 import dnd.team4backend.domain.Dress;
 import dnd.team4backend.domain.User;
+import dnd.team4backend.domain.vo.BasicResponseEntity;
+import dnd.team4backend.domain.vo.UserResponse;
+import dnd.team4backend.domain.vo.UserResponseEntity;
 import dnd.team4backend.service.UserService;
+import dnd.team4backend.service.assembler.UserAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -142,7 +148,24 @@ public class UserController {
             return obj.toString();
         }
 
-
     }
 
+    @GetMapping(value = "user/{id}")
+    public ResponseEntity showUserInfo(@PathVariable("id") String userId) {
+        User user = userService.findOne(userId);
+        if (user == null) {
+            BasicResponseEntity responseEntity = new BasicResponseEntity(400, "해당하는 id의 회원이 존재하지 않습니다.");
+            return new ResponseEntity(responseEntity, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            UserResponse userResponse = UserAssembler.toDto(user);
+            UserResponseEntity responseEntity = new UserResponseEntity(200, "해당 id의 유저 정보를 성공적으로 조회하였습니다.", userResponse);
+            return new ResponseEntity(responseEntity, HttpStatus.OK);
+        } catch (IllegalStateException e) {
+            BasicResponseEntity responseEntity = new BasicResponseEntity(400, e.getMessage());
+            return new ResponseEntity(responseEntity, HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }
