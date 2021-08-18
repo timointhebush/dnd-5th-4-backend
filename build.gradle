@@ -29,6 +29,7 @@ dependencies {
     annotationProcessor('org.projectlombok:lombok')
     testAnnotationProcessor('org.projectlombok:lombok')
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    testImplementation('com.h2database:h2')
 }
 
 test {
