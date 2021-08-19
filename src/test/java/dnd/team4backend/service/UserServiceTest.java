@@ -19,6 +19,7 @@ class UserServiceTest {
 
     @Autowired
     UserService userService;
+    
 
     @Test
     void 회원등록테스트() throws Exception {
