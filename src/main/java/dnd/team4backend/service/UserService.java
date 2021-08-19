@@ -46,4 +46,10 @@ public class UserService {
         return userRepository.findOne(userId);
     }
 
+    public String updateName(String userId, String name) {
+        User user = userRepository.findOne(userId);
+        user.modifyName(name);
+        return user.getId();
+    }
+
 }
