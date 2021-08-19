@@ -5,6 +5,7 @@ import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.junit.jupiter.api.Test;
 
 class PropertyEncyptConfigurationTest {
+
     @Test
     public void checkEncrpt() throws Exception {
 
@@ -25,5 +26,6 @@ class PropertyEncyptConfigurationTest {
         System.out.println("Enc:" + encryptedText2 + ", Dec:" + decryptedText2);
 
     }
+
 
 }
