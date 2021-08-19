@@ -175,6 +175,20 @@ public class UserController {
 
     }
 
+    @PatchMapping(value = "user/{id}")
+    public ResponseEntity updateName(@PathVariable("id") String userId, @RequestBody UserForm userForm) {
+        boolean isExisted = userService.isExistedNickName(userForm.getName());
+        if (!isExisted) {
+            userService.updateName(userId, userForm.getName());
+            UserResponse userResponse = UserAssembler.toDto(userService.findOne(userId));
+            UserResponseEntity responseEntity = new UserResponseEntity(200, "해당 유저의 닉네임을 성공적으로 변경하였습니다.", userResponse);
+            return new ResponseEntity(responseEntity, HttpStatus.OK);
+        } else {
+            BasicResponseEntity responseEntity = new BasicResponseEntity(400, "해당 닉네임이 이미 존재합니다.");
+            return new ResponseEntity(responseEntity, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping(value = "login/google/auth")
     public String googleAuth(@RequestParam("code") String authCode) throws JsonProcessingException {
         //HTTP Request를 위한 RestTemplate
@@ -231,6 +245,7 @@ public class UserController {
             obj.addProperty("msg", e.getMessage());
 
             return obj.toString();
+
         }
     }
 }

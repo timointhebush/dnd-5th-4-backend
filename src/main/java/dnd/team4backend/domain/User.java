@@ -67,4 +67,8 @@ public class User {
         this.gender = gender;
         this.constitution = constitution;
     }
+
+    public void modifyName(String name) {
+        this.name = name;
+    }
 }
