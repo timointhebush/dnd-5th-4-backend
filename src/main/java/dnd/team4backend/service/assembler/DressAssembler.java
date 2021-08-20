@@ -5,11 +5,21 @@ import dnd.team4backend.domain.vo.DressResponse;
 
 public class DressAssembler {
     public static DressResponse toDto(MeasureDress measureDress) {
-        return new DressResponse(
-                measureDress.getDress().getId(),
-                measureDress.getDress().getDressName(),
-                measureDress.getDress().getDressType().toString(),
-                measureDress.getPartialMood().toString()
-        );
+        try {
+            return new DressResponse(
+                    measureDress.getDress().getId(),
+                    measureDress.getDress().getDressName(),
+                    measureDress.getDress().getDressType().toString(),
+                    measureDress.getPartialMood().toString()
+            );
+        } catch (NullPointerException e) {
+            return new DressResponse(
+                    measureDress.getDress().getId(),
+                    measureDress.getDress().getDressName(),
+                    measureDress.getDress().getDressType().toString(),
+                    "null"
+            );
+        }
+
     }
 }
