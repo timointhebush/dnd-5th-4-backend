@@ -29,6 +29,7 @@ dependencies {
     annotationProcessor('org.projectlombok:lombok')
     testAnnotationProcessor('org.projectlombok:lombok')
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation(group: 'com.github.scribejava', name: 'scribejava-core', version: '2.8.1')
 }
 
 test {
