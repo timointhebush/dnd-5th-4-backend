@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dnd.team4backend.controller.form.UserForm;
@@ -13,13 +14,14 @@ import dnd.team4backend.domain.User;
 import dnd.team4backend.domain.vo.*;
 import dnd.team4backend.service.UserService;
 import dnd.team4backend.service.assembler.UserAssembler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +30,12 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final NaverLoginBO naverLoginBO;
+    private String apiResult = null;
 
-    @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, NaverLoginBO naverLoginBO) {
         this.userService = userService;
+        this.naverLoginBO = naverLoginBO;
     }
 
     @GetMapping(value = "user")
@@ -188,6 +192,40 @@ public class UserController {
             return new ResponseEntity(responseEntity, HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    @GetMapping(value = "login/naver")
+    public String naverLogin(HttpSession session) {
+        /* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+        System.out.println("네이버:" + naverAuthUrl);
+
+        try {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("status", 200);
+            obj.addProperty("url", naverAuthUrl);
+            obj.addProperty("msg", "NaverAuthUrl 반환 완료");
+            return obj.toString();
+
+        } catch (IllegalStateException e) {
+            JsonObject obj = new JsonObject();
+
+            obj.addProperty("status", 400);
+            obj.addProperty("msg", e.getMessage());
+
+            return obj.toString();
+
+        }
+    }
+
+    @GetMapping(value = "login/naver/callback")
+    public String callbackNaverLogin(@RequestParam String code, @RequestParam String state, HttpSession session) throws IOException {
+        OAuth2AccessToken oauthToken;
+        oauthToken = naverLoginBO.getAccessToken(session, code, state);
+        apiResult = naverLoginBO.getUserProfile(oauthToken);
+        return apiResult;
+    }
+
 
     @GetMapping(value = "login/google/auth")
     public String googleAuth(@RequestParam("code") String authCode) throws JsonProcessingException {
