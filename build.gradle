@@ -4,15 +4,23 @@ plugins {
     id 'java'
 }
 
+jar {
+    enabled = false
+    manifest {
+        attributes(
+                'Main-Class': 'dnd.team4backend.Team4backendApplication'
+        )
+    }
+}
+
 archivesBaseName = 'team4backend'
 group = 'dnd'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2'
 sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
 }
-
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
