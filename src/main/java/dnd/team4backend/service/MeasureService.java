@@ -92,7 +92,7 @@ public class MeasureService {
         for (MeasureDress measureDress : measureDressList) {
             MeasureDress findMeasureDress = measureDressRepository.findOne(measureDress.getId());
             for (DressVO dressVO : dresses) {
-                if (dressVO.getId() == findMeasureDress.getDress().getId()) {
+                if (dressVO.getId().equals(findMeasureDress.getDress().getId())) {
                     Dress dress = dressRepository.getById(findMeasureDress.getDress().getId());
                     dress.setDressName(dressVO.getName());
                     dress.setDressType(dressVO.getDressType());
