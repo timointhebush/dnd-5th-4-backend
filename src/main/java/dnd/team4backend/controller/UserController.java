@@ -14,24 +14,37 @@ import dnd.team4backend.domain.vo.*;
 import dnd.team4backend.service.UserService;
 import dnd.team4backend.service.assembler.UserAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+@Component
 @CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 
     private final UserService userService;
+    private final Environment env;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, Environment env) {
         this.userService = userService;
+        this.env = env;
+    }
+
+    @GetMapping(value = "profile")
+    public String getProfile() {
+        return Arrays.stream(env.getActiveProfiles())
+                .findFirst()
+                .orElse("");
     }
 
     @GetMapping(value = "user")
