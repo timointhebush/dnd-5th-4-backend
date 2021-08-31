@@ -15,7 +15,7 @@ jar {
 
 archivesBaseName = 'team4backend'
 group = 'dnd'
-version = '0.0.3'
+version = '0.0.4'
 sourceCompatibility = '11'
 
 repositories {
